@@ -1,0 +1,33 @@
+GET http://localhost:3000/api/questions
+
+###
+
+GET http://localhost:3000/api/players
+
+###
+
+POST http://localhost:3000/api/players
+Content-Type: application/json
+
+{
+    "id": "",
+    "email": "test@mail.se",
+    "password": "",
+    "playerName": "Linus",
+    "weeklyPlayerScore": "4",
+    "totalWeeksPlayed": "1"
+}
+
+###
+
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email": "test.@mail.se",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3000/api/logout
