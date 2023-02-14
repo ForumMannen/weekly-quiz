@@ -1,12 +1,17 @@
 const express = require("express");
-const router = express.Router();
-const { 
-    getAllPlayers, 
-    createPlayer, 
+const playersRouter = express.Router();
+const {
+  getAllPlayers,
+  createPlayer,
+  login,
+  logout,
 } = require("../../controllers/players/players.controller");
+const { validate } = require("../../middleware");
+const { playerJoiSchema } = require("../../models/players.models");
 
-router.get("/", getAllPlayers);
+playersRouter.get("/", getAllPlayers);
 
-router.post("/", createPlayer);
-
-module.exports = router;
+playersRouter.post("/register", validate(playerJoiSchema), createPlayer);
+playersRouter.post("/login", validate(playerJoiSchema), login);
+playersRouter.post("/logout", logout);
+module.exports = { playersRouter };

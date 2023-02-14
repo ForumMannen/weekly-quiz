@@ -1,7 +1,7 @@
 const express = require("express");
-const router = express.Router();
+const questionsRouter = express.Router();
 const { getData } = require("../../controllers/questions/questions.controller");
 
-router.get("/", getData)
+questionsRouter.get("/", getData);
 
-module.exports = router;
+module.exports = { questionsRouter };
