@@ -14,6 +14,8 @@ async function main() {
   const connection = mongoose.connection;
   connection.once("open", () => {
     console.log("MongoDB database connection established succesfully");
-    app.listen(3000, () => console.log("Server is up and running..."));
+    app.listen(process.env.PORT || 3000, () =>
+      console.log("Server is up and running...")
+    );
   });
 }
