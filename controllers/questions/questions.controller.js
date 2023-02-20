@@ -58,11 +58,37 @@ cron.schedule("25 12 10 02 *", async function fetchAndSaveToMongoDB() {
 
 async function getData(req, res) {
   try {
-    const questions = await QuestionModel.find().select("-_id -__v -type");
+    const questions = await QuestionModel.find().select(
+      "-_id -__v -type -incorrect_answers -correct_answer"
+    );
+    console.log(questions);
     res.status(200).json(questions);
   } catch (error) {
     next(error);
   }
 }
 
-module.exports = { getData };
+async function getAnswers(req, res) {
+  try {
+    const questions = await QuestionModel.find().select(
+      "_id correct_answer incorrect_answers"
+    );
+    console.log(questions);
+    let allAnswers = [];
+
+    questions.forEach((question) => {
+      const { _id, correct_answer, incorrect_answers } = question;
+      const mergedAnswers = [correct_answer, ...incorrect_answers];
+      const shuffledAnswers = mergedAnswers.sort(() => Math.random() - 0.5);
+      allAnswers.push({
+        id: _id,
+        shuffledAnswers: shuffledAnswers,
+      });
+    });
+    res.status(200).json(allAnswers);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getData, getAnswers };
