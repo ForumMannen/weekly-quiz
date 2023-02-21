@@ -59,7 +59,7 @@ cron.schedule("25 12 10 02 *", async function fetchAndSaveToMongoDB() {
 async function getData(req, res) {
   try {
     const questions = await QuestionModel.find().select(
-      "-_id -__v -type -incorrect_answers -correct_answer"
+      "-__v -type -incorrect_answers -correct_answer"
     );
     console.log(questions);
     res.status(200).json(questions);
