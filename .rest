@@ -22,3 +22,12 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/api/questions/answers
+
+###
+
+POST http://localhost:3000/api/questions
+Content-Type: application/json
+
+{
+    "_id": "ObjectId('63e6298e9fb33f4a1be01c69')"
+}

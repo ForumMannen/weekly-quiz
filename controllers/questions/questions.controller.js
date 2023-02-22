@@ -56,7 +56,7 @@ cron.schedule("25 12 10 02 *", async function fetchAndSaveToMongoDB() {
   }
 });
 
-async function getData(req, res) {
+async function getData(req, res, next) {
   try {
     const questions = await QuestionModel.find().select("-__v -type");
     let allAnswers = [];
@@ -87,4 +87,18 @@ async function getData(req, res) {
   }
 }
 
-module.exports = { getData };
+async function correctAnswer(req, res, next) {
+  try {
+    const questionId = req.body.questionId;
+    const answer = req.body.answer;
+    console.log(questionId);
+    console.log(answer);
+    // console.log("This comes from body:" + req.body);
+    // const answer = await QuestionModel.findOne(req.body.id);
+    // console.log(answer);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getData, correctAnswer };
