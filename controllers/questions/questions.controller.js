@@ -80,7 +80,6 @@ async function getData(req, res, next) {
         shuffledAnswers: shuffledAnswers,
       });
     });
-    console.log(allAnswers);
     res.status(200).json(allAnswers);
   } catch (error) {
     next(error);
@@ -89,13 +88,16 @@ async function getData(req, res, next) {
 
 async function correctAnswer(req, res, next) {
   try {
-    const questionId = req.body.questionId;
-    const answer = req.body.answer;
-    console.log(questionId);
-    console.log(answer);
-    // console.log("This comes from body:" + req.body);
-    // const answer = await QuestionModel.findOne(req.body.id);
-    // console.log(answer);
+    const answer = await QuestionModel.findOne({ _id: req.body.questionId });
+    if (!answer) {
+      return res.status(401).json("Couldn't find a question with that id");
+    }
+
+    if (req.body.answer == answer.correct_answer) {
+      res.status(200).json({ correct: "Correct" });
+    } else {
+      res.status(200).json({ incorrect: "Incorrect" });
+    }
   } catch (error) {
     next(error);
   }
