@@ -12,7 +12,7 @@ const playerSchema = new Schema(
     createdAt: { type: Date, default: Date.now },
   },
   {
-    timestams: true,
+    timestamps: true,
   }
 );
 
